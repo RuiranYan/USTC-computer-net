@@ -11,7 +11,7 @@ Submit to bb.ustc.edu.cn
 * For Q2- Q6, you need to give the corresponding screenshot and explanation.
 * deadline: 2021/11/30
 
-## The packet trace you have captured:
+## traceroute:
 
 ![img](./img/trace.png)
 

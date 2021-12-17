@@ -1,5 +1,6 @@
 import socket
 import threading
+from time import time
 
 class DNS_Relay_Server:      #一个relay server实例，通过缓存文件和外部地址来初始化
     def __init__(self,cache_file,name_server):
@@ -31,11 +32,32 @@ class DNS_Relay_Server:      #一个relay server实例，通过缓存文件和�
                 continue 
 
     def handle(self,server_socket,data,addr):
+        start_time = time()
         RecvDp = DNS_Packege(data)
-        if 是请求报文:
-            #statement
-        if 是响应报文:
-            #statement
+        id = RecvDp.ID
+        if RecvDp.QR == 0: # query
+            # statement
+            name = RecvDp.name
+            if name in self.url_ip and xxxx:
+                ip = self.url_ip[name]
+                response =
+                server_socket.sendto(response,addr)
+                print('%+50s' % name, end='\t')
+                if ip == '0.0.0.0':
+                    print('INTERCEPT', '%fs' % (time() - start_time), sep='\t')
+                else:
+                    print(' RESOLVED', '%fs' % (time() - start_time), sep='\t')
+            else:
+                server_socket.sendto(data,self.name_server)
+                self.trans[id] = (addr,name,start_time)
+        if RecvDp.QR == 1: # response
+            # statement
+            if id in self.trans:
+                target_addr, name, start_time = self.transactions[id]
+                server_socket.sendto(data,target_addr)
+                print('%+50s' % name, '    RELAY', '%fs' % (time() - start_time), sep='\t')
+                del self.transactions[id]
+
 
 class DNS_Packege:        #一个DNS Frame实例，用于解析和生成DNS帧
     def __init__(self,data):
@@ -61,6 +83,7 @@ class DNS_Packege:        #一个DNS Frame实例，用于解析和生成DNS帧
             ......
             return bytes(res)
         else:
+
            
    
 
